@@ -1,8 +1,8 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
-import { convertHoursStringToMInutes } from "./utils/convert-hour-string-to-minutes";
-import { convertMinutesStringToMInutes } from "./utils/convert-minutes-to-hour-string";
+import { convertHoursStringToMinutes } from "./utils/convert-hour-string-to-minutes";
+import { convertMinutesStringToMinutes } from "./utils/convert-minutes-to-hour-string";
 
 const app = express();
 
@@ -38,8 +38,8 @@ app.post("/games/:id/ads", async (request, response) => {
       yearsPlaying: body.yearsPlaying,
       discord: body.discord,
       weekDays: body.weekDays.join(","),
-      hoursEnd: convertHoursStringToMInutes(body.hoursEnd),
-      hoursStart: convertHoursStringToMInutes(body.hoursStart),
+      hoursEnd: convertHoursStringToMinutes(body.hoursEnd),
+      hoursStart: convertHoursStringToMinutes(body.hoursStart),
       useVoiceChannel: body.useVoiceChannel,
     },
   });
@@ -75,8 +75,8 @@ app.get("/games/:id/ads", async (request, response) => {
       return {
         ...ad,
         weekDays: ad.weekDays.split(","),
-        hoursStart: convertMinutesStringToMInutes(ad.hoursStart),
-        hoursSEnd: convertMinutesStringToMInutes(ad.hoursEnd),
+        hoursStart: convertMinutesStringToMinutes(ad.hoursStart),
+        hoursSEnd: convertMinutesStringToMinutes(ad.hoursEnd),
       };
     })
   );
